@@ -19,10 +19,3 @@ export type Web3State = {
     version?: string,
     networkId: string
 }
-
-export type ContractAdapter = {
-    method: Function,
-    send: Function,
-    call: Function,
-    transfer: Function
-}

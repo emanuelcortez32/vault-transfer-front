@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { DepositCard } from "../components/Deposit/DepositCard";
-import { connectContract } from "../components/hocs/connectContract";
-import { ContractAdapter } from "../models/web3Models";
+import { connectContract, ContractAdapter,  } from "../components/hocs/connectContract";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#AED9E0',
