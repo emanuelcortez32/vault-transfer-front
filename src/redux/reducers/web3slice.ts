@@ -1,10 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Web3State } from '../../models/web3Models';
 import web3actions from '../actions/web3Actions';
 
+export type Account = {
+    address: string,
+    balance?: string
+}
+
+export type Web3State = {
+    account?: Account,
+    walletConnected?: boolean;
+    error?: any
+    version?: string,
+    networkId?: string
+}
 
 const initialState: Web3State = {
-    contracts: [],
     account: undefined,
     walletConnected: false,
     version: "",
@@ -17,5 +27,5 @@ const web3Slice = createSlice({
     reducers: web3actions
 });
 
-export const { addContract, getAccount, errorWeb3, connectWallet, getVersion, getNetworkId } = web3Slice.actions;
+export const { connectWalletOk, connectWalletError } = web3Slice.actions;
 export default web3Slice.reducer;

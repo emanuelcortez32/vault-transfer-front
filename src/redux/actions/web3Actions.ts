@@ -1,30 +1,19 @@
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { Account, Contract, Web3State } from "../../models/web3Models";
+import { Web3State } from "../reducers/web3slice";
+import { Dispatch } from 'redux';
+import { connectWallet } from "../../services/web3service";
 
-const addContract: CaseReducer<Web3State, PayloadAction<Contract>> = (state, action) => {
-    state.contracts?.push(action.payload);
+const connectWalletOk: CaseReducer<Web3State, PayloadAction<Web3State>> = (state, action) => {
+    state.account = action.payload.account;
+    state.walletConnected = true;
+    state.networkId = action.payload.networkId;
+    state.version = action.payload.version
 };
 
-const getAccount: CaseReducer<Web3State, PayloadAction<Account>> = (state, action) => {
-    state.account = action.payload;
+const connectWalletError: CaseReducer<Web3State, PayloadAction<Web3State>> = (state, action) => {
+    state.error = action.payload.error
 };
 
-const errorWeb3: CaseReducer<Web3State, PayloadAction<any>> = (state, action) => {
-    state.error = action.payload;
-}
-
-const connectWallet: CaseReducer<Web3State, PayloadAction<boolean>> = (state, action) => {
-    state.walletConnected = action.payload;
-};
-
-const getVersion: CaseReducer<Web3State, PayloadAction<string>> = (state, action) => {
-    state.version = action.payload;
-};
-
-const getNetworkId: CaseReducer<Web3State, PayloadAction<string>> = (state, action) => {
-    state.networkId = action.payload;
-};
-
-const actions = { addContract, getAccount, errorWeb3, connectWallet, getVersion, getNetworkId };
+const actions = { connectWalletOk, connectWalletError };
 
 export default actions;

@@ -12,21 +12,33 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-const pages = ['Transfer', 'Pool'];
+import { useNavigate } from "react-router-dom";
+import { Avatar, Tooltip } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { connectWalletAction } from '../../redux/actions/web3ActionsCreator';
 
 export const AppBarTop = () => {
+
+  const pages: string[] = ['Transfer', 'Pool'];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [anchorElNav, setAnchorElNav] = React.useState<any>(null);
 
   const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseNavMenu = (page: string) => {
+    navigate(`/${page.toLowerCase()}`);
   };
+  
+  const connectMetamask = () => {
+    dispatch(connectWalletAction());
+  }
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" sx={{marginBottom: 5}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AttachMoneyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -45,7 +57,7 @@ export const AppBarTop = () => {
               textDecoration: 'none',
             }}
           >
-            Simple Transfer
+            DeFiTransfer
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -78,7 +90,7 @@ export const AppBarTop = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -101,18 +113,25 @@ export const AppBarTop = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            DeFiTransfer
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Connect Metamask">
+              <IconButton sx={{ p: 0 }} onClick={connectMetamask}>
+                <Avatar alt="metamask-wallet" src="https://www.pngkit.com/png/detail/26-268992_metamask-metamask-wallet.png" />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </Container>

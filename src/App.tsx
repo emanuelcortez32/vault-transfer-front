@@ -1,22 +1,20 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { CssBaseline } from '@mui/material';
 import { AppBarTop } from './components/common/AppBarTop';
 import { AppTheme } from './components/common/AppTheme';
-import AccountDashboard from './pages/AccountDashboard';
-import { initWeb3 } from './services/web3service';
+import { Home } from './pages/Home';
+import { Routes, Route } from "react-router-dom";
 
 const App = (): JSX.Element => {
     
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-     dispatch(initWeb3());
-    },[])
-
     return (
         <AppTheme>
+            <CssBaseline />
             <AppBarTop />
-            <AccountDashboard />
+            <Routes>
+                <Route path='/' element={<Home />}/>
+                <Route path='/transfer' element={<Home />}/>
+                <Route path='/pools' element={<div>POOLS</div>}/>
+            </Routes>
         </AppTheme>
     )
 }

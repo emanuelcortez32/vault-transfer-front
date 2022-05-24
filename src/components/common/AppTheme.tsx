@@ -2,17 +2,21 @@ import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type AppThemeProps = {
-  children: JSX.Element[]
+  children: JSX.Element|JSX.Element[]
 }
 
 const theme = createTheme({
     palette: {
       primary: {
-        main: '#364652',
+        main: '#14213d',
       },
       secondary: {
-        main: '#AED9E0',
+        main: '#fca311',
       },
+      background: {
+        default: '#000814',
+        paper: '#000814'
+      }
     },
   });
 

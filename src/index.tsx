@@ -1,3 +1,10 @@
+declare global {
+  interface Window{
+    ethereum?:any,
+    web3?: Web3
+  }
+}
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -6,6 +13,8 @@ import reportWebVitals from "./reportWebVitals";
 
 import { Provider as ReduxProvider } from 'react-redux'
 import { store as storeRedux } from "./redux/store";
+import { BrowserRouter } from "react-router-dom";
+import Web3 from "web3";
 
 const rootElement = document.getElementById("root");
 
@@ -15,7 +24,9 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <ReduxProvider store={storeRedux}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ReduxProvider>
   </React.StrictMode>
 );
