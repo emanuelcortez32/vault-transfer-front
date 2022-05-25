@@ -61,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@iconify/react": "^3.2.1",
     "@tsconfig/recommended": "^1.0.1",
     "assert": "^2.0.0",
     "crypto-browserify": "^3.12.0",

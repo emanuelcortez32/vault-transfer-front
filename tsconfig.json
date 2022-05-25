@@ -17,6 +17,6 @@
     "jsx": "react-jsx",
     "types": ["react/next", "react-dom/next"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*","./custom.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

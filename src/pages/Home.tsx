@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { TransferBox } from '../components/Transfer/TransferBox';
+import { Swap } from '../components/Swap/Swap';
 
 export const Home = () => {
 
@@ -9,7 +9,7 @@ export const Home = () => {
             direction="row"
             justifyContent="center"
             alignItems="center">
-            <TransferBox />
+            <Swap />
         </Grid>
     )
 }

@@ -10,21 +10,20 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 
-import { styled } from '@mui/material/styles';
 import { Container } from '@mui/system';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Web3State } from '../../redux/reducers/web3slice';
+import { TokenSelector } from '../common/TokenSelector';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#14213d',
-    padding: theme.spacing(1),
-}));
+export const Swap = () => {
 
-export const TransferBox = () => {
+    const { walletConnected, account } = useSelector<RootState, Web3State>(state => state.web3);
 
-    const { walletConnected } = useSelector<RootState, Web3State>(state => state.web3);
+    const formatAddress = (address: string) => {
+        return address.substring(0, 8) + '.....' + address.substring(address.length - 8, address.length);
+    }
 
     return (
         <Box
@@ -49,25 +48,25 @@ export const TransferBox = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
-                                <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-amount">Token</InputLabel>
                                 <OutlinedInput
                                     disabled={!walletConnected}
-                                    id="outlined-adornment-amount"
+                                    id="outlined-adornment-token"
                                     value={0}
-                                    startAdornment={<InputAdornment sx={{ fontWeight: 'bold' }} position="start">ETH</InputAdornment>}
-                                    label="Amount"
+                                    startAdornment={<TokenSelector />}
+                                    label="Token"
                                 />
                             </FormControl>
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
-                                <InputLabel htmlFor="outlined-adornment-from">From</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-account">Account</InputLabel>
                                 <OutlinedInput
                                     disabled
-                                    id="outlined-adornment-from"
-                                    value={""}
+                                    id="outlined-adornment-account"
+                                    value={account?.address ? formatAddress(account?.address) : ""}
                                     startAdornment={<InputAdornment position="start"><AccountBalanceWalletIcon /></InputAdornment>}
-                                    label="From"
+                                    label="Account"
                                 />
                             </FormControl>
                         </Grid>
@@ -113,7 +112,7 @@ export const TransferBox = () => {
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    <Button disabled={!walletConnected} sx={{borderRadius: 5, width: '100%', backgroundColor: '#fca311', fontWeight: 'bold' }} variant="contained">Transfer</Button>
+                    <Button disabled={!walletConnected} sx={{ borderRadius: 5, width: '100%', backgroundColor: '#fca311', fontWeight: 'bold' }} variant="contained">Swap</Button>
                 </Grid>
             </div>
         </Box>
