@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { useNavigate } from "react-router-dom";
 import { Avatar, Badge, Tooltip } from '@mui/material';
@@ -89,7 +89,7 @@ export const AppBarTop = () => {
     <AppBar position="sticky" sx={{ marginBottom: 5 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AttachMoneyIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <SwapHorizontalCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -105,7 +105,7 @@ export const AppBarTop = () => {
               textDecoration: 'none',
             }}
           >
-            DeFiTransfer
+            Swapo
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -144,7 +144,7 @@ export const AppBarTop = () => {
               ))}
             </Menu>
           </Box>
-          <AttachMoneyIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <SwapHorizontalCircleIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -161,7 +161,7 @@ export const AppBarTop = () => {
               textDecoration: 'none',
             }}
           >
-            DeFiTransfer
+            Swapo
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

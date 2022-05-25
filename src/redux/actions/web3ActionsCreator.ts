@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 import { connectWallet } from "../../services/web3service";
 import { connectWalletOk, connectWalletError } from "../reducers/web3slice";
-import { RootState } from "../store";
 
 export const connectWalletAction = (): any => {
   return async (dispatch: Dispatch, getState: any) => {
@@ -18,7 +17,7 @@ export const connectWalletAction = (): any => {
         const payload = {
           account: {
             address,
-            balance,
+            balance: web3.utils.fromWei(balance),
           },
           networkId,
           version,

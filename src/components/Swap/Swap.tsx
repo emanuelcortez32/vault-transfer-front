@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -8,21 +7,62 @@ import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import QrCodeIcon from '@mui/icons-material/QrCode';
 
 import { Container } from '@mui/system';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Web3State } from '../../redux/reducers/web3slice';
-import { TokenSelector } from '../common/TokenSelector';
+import { Token, TokenSelector } from '../common/TokenSelector';
+
+
+
+const tokens: Token[] = [
+    {
+        value: 'Ethereum',
+        alt: 'eth',
+        color: '#7203ee'
+    },
+    {
+        value: 'DAI',
+        alt: 'dai',
+        color: '#f1c40f'
+    },
+    {
+        value: 'USDC',
+        alt: 'usdc',
+        color: '#2980b9'
+    },
+    {
+        value: 'Tether',
+        alt: 'usdt',
+        color: '#28b463'
+    },
+];
 
 export const Swap = () => {
+
+    const [tokenAmount, setTokenAmount] = useState<string>("0");
+    const [tokenAmountSwap, setTokenAmountSwap] = useState<string>("0");
+    const [tokenSelected, setTokenSelected] = useState<Token>(tokens[0]);
+    const [tokenSwapSelected, setTokenSwapSelected] = useState<Token|undefined|null>(tokens[1]);
+
 
     const { walletConnected, account } = useSelector<RootState, Web3State>(state => state.web3);
 
     const formatAddress = (address: string) => {
         return address.substring(0, 8) + '.....' + address.substring(address.length - 8, address.length);
+    }
+
+    const handleSelectToken = (token: Token) => {
+        if(tokenSwapSelected?.alt === token.alt) {
+            setTokenSwapSelected(null)
+        }
+        setTokenSelected(token)
+    }
+
+    const handleSelectSwapToken = (token: Token) => {
+        setTokenSwapSelected(token)
     }
 
     return (
@@ -52,21 +92,22 @@ export const Swap = () => {
                                 <OutlinedInput
                                     disabled={!walletConnected}
                                     id="outlined-adornment-token"
-                                    value={0}
-                                    startAdornment={<TokenSelector />}
+                                    value={tokenAmount}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTokenAmount(e.target.value)}
+                                    startAdornment={<TokenSelector tokens={tokens} onChange={handleSelectToken}/>}
                                     label="Token"
                                 />
                             </FormControl>
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
-                                <InputLabel htmlFor="outlined-adornment-account">Account</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-address">Address</InputLabel>
                                 <OutlinedInput
                                     disabled
-                                    id="outlined-adornment-account"
+                                    id="outlined-adornment-address"
                                     value={account?.address ? formatAddress(account?.address) : ""}
                                     startAdornment={<InputAdornment position="start"><AccountBalanceWalletIcon /></InputAdornment>}
-                                    label="Account"
+                                    label="Address"
                                 />
                             </FormControl>
                         </Grid>
@@ -97,9 +138,9 @@ export const Swap = () => {
                                 <InputLabel htmlFor="outlined-adornment-to">To</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-to"
-                                    disabled={!walletConnected}
-                                    value={""}
-                                    startAdornment={<InputAdornment position="start"><QrCodeIcon /></InputAdornment>}
+                                    disabled
+                                    value={tokenAmountSwap}
+                                    startAdornment={<TokenSelector tokens={tokens.filter((token) => token.alt !== tokenSelected.alt)} onChange={handleSelectSwapToken}/>}
                                     label="To"
                                 />
                             </FormControl>
